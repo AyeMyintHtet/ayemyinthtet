@@ -1,16 +1,14 @@
 ### Hi there 👋
+----
+### I’m currently working on => ClickrMedia Co.LTD <=. But i am trying to search Remote Job with Flexible Hour
 
-<!--
-**AyeMyintHtet/ayemyinthtet** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-[![My Skills](https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=js,nextjs,react,,reduxnodejs,rabbitmq,pug,html,css,bootstrap,mongodb,mysql,docker,express,firebase,git,heroku,babel)](https://skillicons.dev)
 Here are some ideas to get you started:
 
-- 🔭 I’m currently working on ClickrMedia Co.LTD. But i am trying to search Remote Job with Flexible Hour.
-- 🌱 I’m currently learning PHP,Symfony and new technologies
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
+
+- 🌱 I’m currently learning PHP,Symfony and new technologies..
+- 💬 About ...
 - 📫 How to reach me: ...
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
--->
+
