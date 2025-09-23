@@ -142,12 +142,29 @@ jobs:
 
       - name: Commit changes
         run: |
+          set -e
+          echo "Branch: $(git branch --show-current || echo 'detached HEAD')"
+          git status --porcelain
+          # Show what changed (useful when debugging)
+          git diff --unified=0 README.md || true
+
+          # Configure author as YOU (counts toward your contributions)
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+          # Stage and commit only if there is a diff
           if git diff --quiet; then
             echo "No changes to commit."
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add README.md
           git commit -m "chore: hourly randomized update"
-          git push
+
+          # Rebase in case multiple runs touched main
+          git pull --rebase origin main || true
+          git push origin HEAD:main
+
+          echo "Pushed commit:"
+          git --no-pager log -1 --oneline
+
