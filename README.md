@@ -64,4 +64,23 @@
 ---
 
 > ⭐ If you like something here, consider starring the repo. It helps others find my work!
+## 🕒 Last Updated
+<!--START_SECTION:updated-->
+Last updated: _pending…_
+<!--END_SECTION:updated-->
+
+## ✨ Random Quote
+<!--START_SECTION:quote-->
+> Loading quote…
+<!--END_SECTION:quote-->
+
+## 😂 Joke of the Day
+<!--START_SECTION:joke-->
+Loading joke…
+<!--END_SECTION:joke-->
+
+## 📝 Latest Blog Posts
+<!--START_SECTION:blog-->
+- (waiting for RSS…)
+<!--END_SECTION:blog-->
 
