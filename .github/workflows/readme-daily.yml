@@ -2,14 +2,19 @@ name: Update Profile README Daily
 
 on:
   schedule:
-    - cron: "0 * * * *"   # run every hour (UTC)
-  workflow_dispatch:       # allow manual runs
+    - cron: "0 * * * *"   # hourly (UTC)
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force commit this run (bypass random hour guard)"
+        required: false
+        default: "false"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # needed to push changes
+      contents: write
 
     steps:
       - name: Checkout repo
@@ -20,122 +25,79 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Generate content (hourly; commit only 6–10 times/day)
+      - name: Generate content (hourly; commit only 6–10/day, unless forced)
+        env:
+          FORCE_COMMIT: ${{ github.event.inputs.force || 'false' }}
         run: |
           cat > update.js <<'EOF'
           import fs from 'fs/promises';
 
-          // ========= Commit frequency guard (6–10 random hours per day) =========
-          // Deterministically pick a random set of hours for *today* (UTC).
-          function xorshift(seed) {
-            let x = seed | 0;
-            return () => {
-              x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
-              return (x >>> 0) / 0xFFFFFFFF;
-            };
+          // ======= Commit frequency guard: 6–10 random hours per UTC day =======
+          const FORCE = (process.env.FORCE_COMMIT || '').toLowerCase() === 'true';
+          if (!FORCE) {
+            function xorshift(seed){let x=seed|0;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return (x>>>0)/0xFFFFFFFF;};}
+            const now=new Date(), y=now.getUTCFullYear(), m=String(now.getUTCMonth()+1).padStart(2,'0'), d=String(now.getUTCDate()).padStart(2,'0');
+            const dayKey=`${y}${m}${d}`, hour=now.getUTCHours();
+            let seed=0; for (const ch of dayKey) seed=(seed*31+ch.charCodeAt(0))|0;
+            const rand=xorshift(seed);
+            const quota=6+Math.floor(rand()*5); // 6..10
+            const hours=[...Array(24).keys()];
+            for (let i=hours.length-1;i>0;i--){const j=Math.floor(rand()*(i+1)); [hours[i],hours[j]]=[hours[j],hours[i]];}
+            const commitHours = new Set(hours.slice(0, quota));
+            console.log('Commit hours (UTC) today:', [...commitHours].sort((a,b)=>a-b).join(','));
+            console.log('Current UTC hour:', hour);
+            if (!commitHours.has(hour)) {
+              console.log(`Skip commit this hour (UTC=${hour}); quota=${quota}/day`);
+              process.exit(0);
+            }
+          } else {
+            console.log('FORCE_COMMIT=true → bypassing random hour guard for this run.');
           }
 
-          const now = new Date();
-          const y = now.getUTCFullYear();
-          const m = String(now.getUTCMonth() + 1).padStart(2, '0');
-          const d = String(now.getUTCDate()).padStart(2, '0');
-          const dayKey = `${y}${m}${d}`;      // e.g., 20250923
-          const hour = now.getUTCHours();     // 0..23
+          // ====================== Your updater logic ============================
+          const nowUtc=()=>new Date().toISOString().replace('T',' ').replace(/\..+/,'')+' UTC';
+          const clamp=(s)=>s?.toString().trim().replace(/\s+/g,' ')||'';
+          async function fetchJSON(url){const r=await fetch(url,{headers:{Accept:'application/json'}}); if(!r.ok) throw new Error(r.status); return r.json();}
+          async function fetchText(url){const r=await fetch(url); if(!r.ok) throw new Error(r.status); return r.text();}
 
-          // Seed RNG with today's key so hours change daily but are stable within the day
-          let seed = 0;
-          for (const ch of dayKey) seed = (seed * 31 + ch.charCodeAt(0)) | 0;
-          const rand = xorshift(seed);
+          const updated=`Last updated: ${nowUtc()}`;
 
-          // Choose a daily quota between 6 and 10
-          const quota = 6 + Math.floor(rand() * 5); // 6,7,8,9,10
+          let quoteBlock='Could not load quote today.';
+          try{const q=await fetchJSON('https://api.quotable.io/random'); quoteBlock=`> ${clamp(q.content)}\n>\n> — **${clamp(q.author)}**`;}catch{}
 
-          // Shuffle hours [0..23] and take the first `quota` as commit hours
-          const hours = [...Array(24).keys()];
-          for (let i = hours.length - 1; i > 0; i--) {
-            const j = Math.floor(rand() * (i + 1));
-            [hours[i], hours[j]] = [hours[j], hours[i]];
-          }
-          const commitHours = new Set(hours.slice(0, quota));
+          let jokeBlock='Could not load a joke today.';
+          try{const j=await fetchJSON('https://v2.jokeapi.dev/joke/Any?type=single&safe-mode'); jokeBlock=j?.joke?j.joke.replace(/\s+/g,' '):jokeBlock;}catch{}
 
-          if (!commitHours.has(hour)) {
-            console.log(`Skip commit this hour (UTC hour=${hour}); quota=${quota}/day; commit hours=${[...commitHours].sort((a,b)=>a-b).join(',')}`);
-            process.exit(0); // Exit early so nothing changes/commits
-          }
-
-          // ===================== Your original updater logic =====================
-          // Simple helpers
-          const nowUtc = () => new Date().toISOString().replace('T', ' ').replace(/\..+/, '') + ' UTC';
-          const clamp = (s) => s?.toString().trim().replace(/\s+/g, ' ') || '';
-
-          async function fetchJSON(url) {
-            const res = await fetch(url, { headers: { 'Accept': 'application/json' }});
-            if (!res.ok) throw new Error(`Fetch failed ${res.status} for ${url}`);
-            return res.json();
-          }
-
-          async function fetchText(url) {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`Fetch failed ${res.status} for ${url}`);
-            return res.text();
-          }
-
-          // 1) Timestamp
-          const updated = `Last updated: ${nowUtc()}`;
-
-          // 2) Random Quote (Quotable)
-          let quoteBlock = 'Could not load quote today.';
-          try {
-            const q = await fetchJSON('https://api.quotable.io/random');
-            const text = clamp(q.content);
-            const author = clamp(q.author);
-            quoteBlock = `> ${text}\n>\n> — **${author}**`;
-          } catch (e) { /* ignore */ }
-
-          // 3) Joke of the day (JokeAPI)
-          let jokeBlock = 'Could not load a joke today.';
-          try {
-            const j = await fetchJSON('https://v2.jokeapi.dev/joke/Any?type=single&safe-mode');
-            jokeBlock = j?.joke ? j.joke.replace(/\s+/g, ' ') : jokeBlock;
-          } catch (e) { /* ignore */ }
-
-          // 4) Latest Blog Posts from RSS (optional)
-          let blogBlock = '- (no RSS configured)';
-          const rssUrl = process.env.BLOG_RSS;
+          let blogBlock='- (no RSS configured)';
+          const rssUrl=process.env.BLOG_RSS;
           if (rssUrl) {
-            try {
-              const xml = await fetchText(rssUrl);
-              // Grab up to 5 <item> blocks
-              const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].slice(0, 5).map(m => m[1]);
-              const posts = items.map(it => {
-                const t = (it.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || 'Untitled').replace(/<!\[CDATA\[|\]\]>/g, '').trim();
-                const l = (it.match(/<link>([\s\S]*?)<\/link>/i)?.[1] || '').trim();
+            try{
+              const xml=await fetchText(rssUrl);
+              const items=[...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].slice(0,5).map(m=>m[1]);
+              const posts=items.map(it=>{
+                const t=(it.match(/<title>([\s\S]*?)<\/title>/i)?.[1]||'Untitled').replace(/<!\[CDATA\[|\]\]>/g,'').trim();
+                const l=(it.match(/<link>([\s\S]*?)<\/link>/i)?.[1]||'').trim();
                 return `- [${t}](${l})`;
               });
-              if (posts.length) blogBlock = posts.join('\n');
-            } catch (e) {
-              blogBlock = '- (failed to fetch RSS)';
-            }
+              if (posts.length) blogBlock=posts.join('\n');
+            } catch { blogBlock='- (failed to fetch RSS)'; }
           }
 
-          // Read README and replace sections
-          const readme = await fs.readFile('README.md', 'utf8');
+          const readme=await fs.readFile('README.md','utf8');
+          const replaceSection=(content,marker,inner)=>{
+            const start=`<!--START_SECTION:${marker}-->`, end=`<!--END_SECTION:${marker}-->`;
+            const pattern=new RegExp(`${start}[\\s\\S]*?${end}`,'m');
+            return content.replace(pattern,`${start}\n${inner}\n${end}`);
+          };
 
-          function replaceSection(content, marker, inner) {
-            const start = `<!--START_SECTION:${marker}-->`;
-            const end   = `<!--END_SECTION:${marker}-->`;
-            const pattern = new RegExp(`${start}[\\s\\S]*?${end}`, 'm');
-            return content.replace(pattern, `${start}\n${inner}\n${end}`);
-          }
+          let out=readme;
+          out=replaceSection(out,'updated',updated);
+          out=replaceSection(out,'quote',quoteBlock);
+          out=replaceSection(out,'joke',jokeBlock);
+          out=replaceSection(out,'blog',blogBlock);
 
-          let out = readme;
-          out = replaceSection(out, 'updated', updated);
-          out = replaceSection(out, 'quote', quoteBlock);
-          out = replaceSection(out, 'joke', jokeBlock);
-          out = replaceSection(out, 'blog', blogBlock);
-
-          await fs.writeFile('README.md', out, 'utf8');
-          console.log('README.md updated (hour allowed).');
+          await fs.writeFile('README.md',out,'utf8');
+          console.log('README.md updated.');
           EOF
 
           node update.js
@@ -145,14 +107,12 @@ jobs:
           set -e
           echo "Branch: $(git branch --show-current || echo 'detached HEAD')"
           git status --porcelain
-          # Show what changed (useful when debugging)
           git diff --unified=0 README.md || true
 
-          # Configure author as YOU (counts toward your contributions)
+          # Author as you (counts as your contribution)
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
 
-          # Stage and commit only if there is a diff
           if git diff --quiet; then
             echo "No changes to commit."
             exit 0
@@ -160,11 +120,5 @@ jobs:
 
           git add README.md
           git commit -m "chore: hourly randomized update"
-
-          # Rebase in case multiple runs touched main
           git pull --rebase origin main || true
           git push origin HEAD:main
-
-          echo "Pushed commit:"
-          git --no-pager log -1 --oneline
-
