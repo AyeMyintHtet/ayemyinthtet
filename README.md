@@ -79,8 +79,4 @@ Last updated: _pending…_
 Loading joke…
 <!--END_SECTION:joke-->
 
-## 📝 Latest Blog Posts
-<!--START_SECTION:blog-->
-- (waiting for RSS…)
-<!--END_SECTION:blog-->
 
