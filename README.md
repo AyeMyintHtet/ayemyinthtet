@@ -9,7 +9,8 @@
 <p align="center">
   <a href="mailto:ayemyinthtet099@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-ayemyinthtet099%40gmail.com-informational?logo=gmail"></a>
   <img alt="Location" src="https://img.shields.io/badge/Bangkok-Thailand-ff69b4">
-  <img alt="Status" src="https://img.shields.io/badge/Open%20to-Remote%20Work-brightgreen">
+  <!-- <img alt="Status" src="https://img.shields.io/badge/Open%20to-Remote%20Work-brightgreen"> -->
+  <img alt="Status" src="https://img.shields.io/badge/OpenTo-Full%20Time%20or%20Remote%20Work-brightgreen">
 </p>
 
 ---
