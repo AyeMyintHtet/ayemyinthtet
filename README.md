@@ -72,12 +72,17 @@ Last updated: _pending…_
 
 ## ✨ Random Quote
 <!--START_SECTION:quote-->
-> Loading quote…
+Loading quote…
 <!--END_SECTION:quote-->
 
 ## 😂 Joke of the Day
 <!--START_SECTION:joke-->
 Loading joke…
 <!--END_SECTION:joke-->
+
+## 📝 Latest Blog Posts
+<!--START_SECTION:blog-->
+- (no RSS configured)
+<!--END_SECTION:blog-->
 
 
