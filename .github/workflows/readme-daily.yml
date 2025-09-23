@@ -1,0 +1,117 @@
+name: Update Profile README Daily
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # every day at 00:00 UTC
+  workflow_dispatch:       # allow manual runs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push changes
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate daily content
+        run: |
+          cat > update.js <<'EOF'
+          import fs from 'fs/promises';
+
+          // Simple helpers
+          const nowUtc = () => new Date().toISOString().replace('T', ' ').replace(/\..+/, '') + ' UTC';
+          const clamp = (s) => s?.toString().trim().replace(/\s+/g, ' ') || '';
+
+          async function fetchJSON(url) {
+            const res = await fetch(url, { headers: { 'Accept': 'application/json' }});
+            if (!res.ok) throw new Error(`Fetch failed ${res.status} for ${url}`);
+            return res.json();
+          }
+
+          async function fetchText(url) {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Fetch failed ${res.status} for ${url}`);
+            return res.text();
+          }
+
+          // 1) Timestamp
+          const updated = `Last updated: ${nowUtc()}`;
+
+          // 2) Random Quote (Quotable)
+          // Docs: https://api.quotable.io
+          let quoteBlock = 'Could not load quote today.';
+          try {
+            const q = await fetchJSON('https://api.quotable.io/random');
+            const text = clamp(q.content);
+            const author = clamp(q.author);
+            quoteBlock = `> ${text}\n>\n> — **${author}**`;
+          } catch (e) { /* ignore */ }
+
+          // 3) Joke of the day (JokeAPI)
+          // Docs: https://v2.jokeapi.dev/
+          let jokeBlock = 'Could not load a joke today.';
+          try {
+            const j = await fetchJSON('https://v2.jokeapi.dev/joke/Any?type=single&safe-mode');
+            jokeBlock = j?.joke ? j.joke.replace(/\s+/g, ' ') : jokeBlock;
+          } catch (e) { /* ignore */ }
+
+          // 4) Latest Blog Posts from RSS (set BLOG_RSS env)
+          // Very lightweight XML parsing (no dependencies). Works for most simple RSS.
+          let blogBlock = '- (no RSS configured)';
+          const rssUrl = process.env.BLOG_RSS;
+          if (rssUrl) {
+            try {
+              const xml = await fetchText(rssUrl);
+              // Grab up to 5 <item> blocks
+              const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].slice(0, 5).map(m => m[1]);
+              const posts = items.map(it => {
+                const t = (it.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || 'Untitled').replace(/<!\[CDATA\[|\]\]>/g, '').trim();
+                const l = (it.match(/<link>([\s\S]*?)<\/link>/i)?.[1] || '').trim();
+                return `- [${t}](${l})`;
+              });
+              if (posts.length) blogBlock = posts.join('\n');
+            } catch (e) {
+              blogBlock = '- (failed to fetch RSS)';
+            }
+          }
+
+          // Read README and replace sections
+          const readme = await fs.readFile('README.md', 'utf8');
+
+          function replaceSection(content, marker, inner) {
+            const start = `<!--START_SECTION:${marker}-->`;
+            const end   = `<!--END_SECTION:${marker}-->`;
+            const pattern = new RegExp(`${start}[\\s\\S]*?${end}`, 'm');
+            return content.replace(pattern, `${start}\n${inner}\n${end}`);
+          }
+
+          let out = readme;
+          out = replaceSection(out, 'updated', updated);
+          out = replaceSection(out, 'quote', quoteBlock);
+          out = replaceSection(out, 'joke', jokeBlock);
+          out = replaceSection(out, 'blog', blogBlock);
+
+          await fs.writeFile('README.md', out, 'utf8');
+          console.log('README.md updated.');
+          EOF
+
+          node update.js
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore: daily README update"
+          git push
