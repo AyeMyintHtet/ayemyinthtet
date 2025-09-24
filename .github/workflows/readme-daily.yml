@@ -2,7 +2,7 @@ name: Update Profile README Daily
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   # hourly (UTC)
+    - cron: "0 * * * *"   # hourly (UTC)
   workflow_dispatch:
     inputs:
       force:
