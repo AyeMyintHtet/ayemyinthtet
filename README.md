@@ -26,29 +26,40 @@
 
 ### 🔥 Selected Projects
 
-- **Next.js 15 Conference Explorer**  
-  Interactive conference browser showcasing **React 19 features**, **View Transitions**, **Tailwind v4**, and **Prisma**.  
-  Repo: [`next15-conferences`](https://github.com/AyeMyintHtet/next15-conferences) • Demo: next15-conferences.vercel.app  
-  _Highlights: modern Next 15 stack, DB seeding, environment config, production deploys_.
+- **Next.js 15 Conference Explorer** 🚀  
+  A modern conference discovery app showcasing **Next.js 15**, **React 19**, **View Transitions**, **Tailwind CSS v4**, **Prisma**, and App Router patterns.  
+  **Repo:** [`next15-conferences`](https://github.com/AyeMyintHtet/next15-conferences) • **Demo:** https://next15-conferences.vercel.app  
+  _Highlights: cutting-edge Next stack, DB seeding, environment configs, production deployment._
 
-- **Nest + Next Monorepo (Turborepo)**  
-  A TypeScript monorepo wiring **Next.js apps** with shared **UI packages** and lint/format configs; great DX on large projects.  
-  Repo: [`turborepoNestAndNext`](https://github.com/AyeMyintHtet/turborepoNestAndNext)  
-  _Highlights: Turborepo pipelines, shared configs, workspace tooling_.
+- **AI Content Writer** ✨🤖  
+  An AI-powered content generation app for creating blog posts and marketing copy using modern **Next.js** patterns and LLM integration.  
+  **Repo:** [`ai-content-writer`](https://github.com/AyeMyintHtet/ai-content-writer)  
+  _Highlights: AI integration, prompt-based content generation, clean UI & developer experience._
 
-- **Library Management System (Next.js + TS)**  
-  A Next.js TypeScript app scaffolded for a full CRUD product with clean structure and Prisma-ready configuration.  
-  Repo: [`library-management-system`](https://github.com/AyeMyintHtet/library-management-system)
+- **Nest + Next Monorepo (Turborepo)** 🧱  
+  A scalable **TypeScript monorepo** combining **NestJS backend** and **Next.js frontend** with shared UI packages and unified tooling.  
+  **Repo:** [`turborepoNestAndNext`](https://github.com/AyeMyintHtet/turborepoNestAndNext)  
+  _Highlights: Turborepo pipelines, shared configs, linting, DX-focused structure._
 
-- **TokTik Clone (TS)**  
-  Short-video style social app foundation to explore feeds, auth, and media handling.  
-  Repo: [`toktik-clone`](https://github.com/AyeMyintHtet/toktik-clone)
+- **My Restaurant** 🍽️  
+  A restaurant website/product exploring **real-world UI flows** such as menus, layouts, and customer-friendly presentation using a modern frontend stack.  
+  **Repo:** [`my-restaurant`](https://github.com/AyeMyintHtet/my-restaurant)  
+  _Highlights: practical product UI, responsive design, real-business use case._
 
-- **Expense Tracker (Vue)**  
-  A small Vue project focused on state management and component patterns.  
-  Repo: [`expense-tracker`](https://github.com/AyeMyintHtet/expense-tracker)
+- **Library Management System (Next.js + TypeScript)** 📚  
+  A Next.js TypeScript project structured for real-world CRUD applications with **clean architecture** and **Prisma-ready setup**.  
+  **Repo:** [`library-management-system`](https://github.com/AyeMyintHtet/library-management-system)  
+  _Highlights: scalable structure, typed data flow, backend-ready design._
 
-> More repos: [`AyeMyintHtet?tab=repositories`](https://github.com/AyeMyintHtet?tab=repositories)
+- **TokTik Clone (TypeScript)** 🎬  
+  A short-video social app foundation exploring **feeds**, **authentication**, and **media-driven UI patterns**.  
+  **Repo:** [`toktik-clone`](https://github.com/AyeMyintHtet/toktik-clone)
+
+- **Expense Tracker (Vue)** 💸  
+  A lightweight Vue project focused on **state management**, **component composition**, and clean UI logic.  
+  **Repo:** [`expense-tracker`](https://github.com/AyeMyintHtet/expense-tracker)
+
+> More projects & experiments → [github.com/AyeMyintHtet](https://github.com/AyeMyintHtet?tab=repositories)
 
 ---
 
