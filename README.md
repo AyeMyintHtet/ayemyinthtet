@@ -1,99 +1,52 @@
-[![My Skills](https://skillicons.dev/icons?i=js,nextjs,react,,reduxnodejs,rabbitmq,pug,html,css,bootstrap,mongodb,mysql,docker,express,firebase,git,heroku,babel)](https://skillicons.dev)
-<!-- Profile README for github.com/AyeMyintHtet -->
+# Aye Myint Htet
 
-<h1 align="center">Hi, I'm Aye Myint Htet @ June-Aye 👋</h1>
-<p align="center">
-  Senior Full-Stack Developer • React / Next.js • Node • TypeScript • GCP • Open to Full-Time or Remote Roles
-</p>
+**Senior Frontend Developer with full-stack experience**  
+Bangkok, Thailand · Open to full-time and remote opportunities
 
-<p align="center">
-  <a href="mailto:ayemyinthtet099@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-ayemyinthtet099%40gmail.com-informational?logo=gmail"></a>
-  <img alt="Location" src="https://img.shields.io/badge/Bangkok-Thailand-ff69b4">
-  <!-- <img alt="Status" src="https://img.shields.io/badge/Open%20to-Remote%20Work-brightgreen"> -->
-  <img alt="Status" src="https://img.shields.io/badge/OpenTo-Full%20Time%20or%20Remote%20Work-brightgreen">
-</p>
+I build web applications with React, Next.js, Vue.js, JavaScript, and TypeScript, with backend experience using Node.js, Express.js, and NestJS.
 
----
+[Email](mailto:ayemyinthtet099@gmail.com) · [LinkedIn](https://www.linkedin.com/in/aye-myint-htet-195616187/) · [Projects](https://github.com/AyeMyintHtet?tab=repositories)
 
-### 🧰 Tech I Use
-- **Frontend:** React, Next.js,VueJS, Tailwind,Boostrap,HTML,CSS,SCSS,Javascript,Typescript
-- **Backend:** Node.js, ExpressJS, NestJS, REST, WebSockets
-- **Databases:** Prisma ORM, PostgreSQL / SQLite, PHPMyadmin, Firebase, Mongodb, Supabase
-- **Tooling & DX:** TypeScript, Turborepo, ESLint, Prettier, PNPM, Vite
-- **Cloud & DevOps:** Vercel, Docker, CI/CD (GitHub Actions)
+## Core skills
 
----
+- **Frontend:** React, Next.js, Vue.js, JavaScript, TypeScript, HTML, CSS, SCSS, Tailwind CSS, Bootstrap
+- **Backend and APIs:** Node.js, Express.js, NestJS, REST APIs, WebSockets
+- **Data:** PostgreSQL, MySQL, MongoDB, SQLite; Prisma ORM; Supabase and Firebase
+- **Development tools:** Git, Vite, Turborepo, ESLint, Prettier, pnpm
+- **Deployment:** Vercel, Docker, GitHub Actions
 
-### 🔥 Selected Projects
+## Selected work
 
-- **Next.js 15 Conference Explorer** 🚀  
-  A modern conference discovery app showcasing **Next.js 15**, **React 19**, **View Transitions**, **Tailwind CSS v4**, **Prisma**, and App Router patterns.  
-  **Repo:** [`next15-conferences`](https://github.com/AyeMyintHtet/next15-conferences) • **Demo:** https://next15-conferences.vercel.app  
-  _Highlights: cutting-edge Next stack, DB seeding, environment configs, production deployment._
+### [AyeCalc](https://github.com/AyeMyintHtet/ayecalc)
 
-- **AI Content Writer** ✨🤖  
-  An AI-powered content generation app for creating blog posts and marketing copy using modern **Next.js** patterns and LLM integration.  
-  **Repo:** [`ai-content-writer`](https://github.com/AyeMyintHtet/ai-content-writer)  
-  _Highlights: AI integration, prompt-based content generation, clean UI & developer experience._
+A web toolbox for calculators, unit converters, image tools, and developer utilities, built with Next.js, React, and TypeScript.
 
-- **Nest + Next Monorepo (Turborepo)** 🧱  
-  A scalable **TypeScript monorepo** combining **NestJS backend** and **Next.js frontend** with shared UI packages and unified tooling.  
-  **Repo:** [`turborepoNestAndNext`](https://github.com/AyeMyintHtet/turborepoNestAndNext)  
-  _Highlights: Turborepo pipelines, shared configs, linting, DX-focused structure._
+- Page metadata, Open Graph cards, and JSON-LD structured data.
+- Searchable tool directory, interactive calculators, and reusable page components.
+- Lint, type-check, and test scripts available in the repository.
 
-- **My Restaurant** 🍽️  
-  A restaurant website/product exploring **real-world UI flows** such as menus, layouts, and customer-friendly presentation using a modern frontend stack.  
-  **Repo:** [`my-restaurant`](https://github.com/AyeMyintHtet/my-restaurant)  
-  _Highlights: practical product UI, responsive design, real-business use case._
+[Website](https://www.ayecalc.com) · [Source](https://github.com/AyeMyintHtet/ayecalc)
 
-- **Library Management System (Next.js + TypeScript)** 📚  
-  A Next.js TypeScript project structured for real-world CRUD applications with **clean architecture** and **Prisma-ready setup**.  
-  **Repo:** [`library-management-system`](https://github.com/AyeMyintHtet/library-management-system)  
-  _Highlights: scalable structure, typed data flow, backend-ready design._
+### [Next.js Conference Explorer](https://github.com/AyeMyintHtet/next15-conferences)
 
-- **TokTik Clone (TypeScript)** 🎬  
-  A short-video social app foundation exploring **feeds**, **authentication**, and **media-driven UI patterns**.  
-  **Repo:** [`toktik-clone`](https://github.com/AyeMyintHtet/toktik-clone)
+A conference discovery application using Next.js 15, React 19, TypeScript, Tailwind CSS v4, Ariakit, and Prisma.
 
-- **Expense Tracker (Vue)** 💸  
-  A lightweight Vue project focused on **state management**, **component composition**, and clean UI logic.  
-  **Repo:** [`expense-tracker`](https://github.com/AyeMyintHtet/expense-tracker)
+- App Router and View Transitions.
+- Database setup and seed scripts documented in the repository.
 
-> More projects & experiments → [github.com/AyeMyintHtet](https://github.com/AyeMyintHtet?tab=repositories)
+[Source and setup](https://github.com/AyeMyintHtet/next15-conferences)
 
----
+### [AI Content Writer](https://github.com/AyeMyintHtet/ai-content-writer)
 
-### 💼 What I’m Looking For
-- **full-stack/Frontend** roles building modern web apps
-- Teams that value **DX**, clean architecture, and **TypeScript-first** development
+A Next.js 16 and TypeScript project with a React landing page composed from reusable hero, feature, how-it-works, and call-to-action sections.
 
----
+- React 19 and Tailwind CSS v4.
+- Component-based page composition with ESLint and formatting configuration.
 
-### 📫 Contact
-- Email: **ayemyinthtet099@gmail.com**
-- LinkedIn : **https://www.linkedin.com/in/aye-myint-htet-195616187/**
+[Source and setup](https://github.com/AyeMyintHtet/ai-content-writer)
 
----
+## Opportunities
 
-> ⭐ If you like something here, consider starring the repo. It helps others find my work!
-## 🕒 Last Updated
-<!--START_SECTION:updated-->
-Last updated: 2026-10-07 23:27:43 UTC
-<!--END_SECTION:updated-->
+Interested in senior frontend and full-stack roles building web applications with React, Next.js, TypeScript, and Node.js.
 
-## ✨ Random Quote
-<!--START_SECTION:quote-->
-Could not load quote today.
-<!--END_SECTION:quote-->
-
-## 😂 Joke of the Day
-<!--START_SECTION:joke-->
-ASCII silly question, get a silly ANSI.
-<!--END_SECTION:joke-->
-
-## 📝 Latest Blog Posts
-<!--START_SECTION:blog-->
-- (no RSS configured)
-<!--END_SECTION:blog-->
-
-
+Contact: [ayemyinthtet099@gmail.com](mailto:ayemyinthtet099@gmail.com)
