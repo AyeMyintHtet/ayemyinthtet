@@ -27,6 +27,26 @@ A web toolbox for calculators, unit converters, image tools, and developer utili
 
 [Website](https://www.ayecalc.com) · [Source](https://github.com/AyeMyintHtet/ayecalc)
 
+### [Buffet POS / Restaurant Management](https://github.com/AyeMyintHtet/my-buffet-pos)
+
+A restaurant management application built with Next.js 15, React 19, TypeScript, Supabase, and TanStack Query.
+
+- Dashboard for table sessions, customer counts, menu tiers, and paid/pending status.
+- QR-linked customer sessions and printable receipts.
+- Query caching and targeted invalidation after checkout; time-based overdue indicators.
+
+[Source and setup](https://github.com/AyeMyintHtet/my-buffet-pos)
+
+### [Encrypted Chat App](https://github.com/AyeMyintHtet/encrypted-chatapp)
+
+A Next.js and TypeScript messaging project using Supabase and browser Web Crypto APIs.
+
+- Supabase Broadcast messaging, typing indicators, and per-user presence subscriptions.
+- Client-side message encryption using ECDH-derived AES-GCM keys.
+- Virtualized message lists, lazy-loaded interaction components, and mobile keyboard viewport handling.
+
+[Source and setup](https://github.com/AyeMyintHtet/encrypted-chatapp)
+
 ### [Next.js Conference Explorer](https://github.com/AyeMyintHtet/next15-conferences)
 
 A conference discovery application using Next.js 15, React 19, TypeScript, Tailwind CSS v4, Ariakit, and Prisma.
